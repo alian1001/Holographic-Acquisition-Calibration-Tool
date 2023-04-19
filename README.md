@@ -13,3 +13,6 @@ pip install -r requirements.txt
 
 To exit the virtual environment, run the following command:
 deactivate
+
+
+test
