@@ -16,6 +16,8 @@ To exit the virtual environment, run the following command:\
 deactivate
 
 For Windows:\
+Set powershell permissions to allow all bypass\
+Then\
 Run:\
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force\
 Then:\
