@@ -14,5 +14,8 @@ pip install -r requirements.txt
 To exit the virtual environment, run the following command:
 deactivate
 
-
-test
+For Windows:
+Run:
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+Then:
+.\virtual_venv\Scripts\activate.ps1
