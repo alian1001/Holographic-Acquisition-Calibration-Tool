@@ -1,2 +1,5 @@
 venv/
 .venv
+sourcecode/data/.DS_Store
+sourcecode/.DS_Store
+.DS_Store
