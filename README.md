@@ -19,4 +19,4 @@ For Windows:\
 Run:\
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force\
 Then:\
-.\virtual_venv\bin\activate.ps1
+.\venv\bin\activate.ps1 | .\env\script\activate.ps1
