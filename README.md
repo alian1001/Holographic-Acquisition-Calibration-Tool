@@ -5,8 +5,9 @@ Alian Haidar (22900426)\
 Luke Kirkby (22885101)\
 Erwin Bauernschmitt (22964301)
 
-There is a virtual environment in the root directory of the project. To activate it, run the following command:\
-source virtual_venv/bin/activate
+A virtual environment is required to run the project.\
+To create a virtual environment, run the following command:\
+python3 -m venv virtual_venv | python -m venv virtual_venv
 
 To install the required packages, run the following command:\
 pip install -r requirements.txt
