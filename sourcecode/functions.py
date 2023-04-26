@@ -1,3 +1,11 @@
+import tkinter as tk
+from tkinter import filedialog
+from PIL import ImageTk, Image
+import numpy as np
+import cv2
+from scipy import ndimage
+from skimage import img_as_ubyte, img_as_int
+
 def load_image(self):
      # Open a file selection dialog box to choose an image file
         file_path = filedialog.askopenfilename(title="Select Image File", filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp;*.gif")])
