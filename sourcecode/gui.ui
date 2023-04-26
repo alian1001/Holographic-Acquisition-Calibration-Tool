@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1190</width>
+    <height>490</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1190</width>
+    <height>490</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1190</width>
+    <height>490</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+    <stylestrategy>PreferDefault</stylestrategy>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Holographic Acquisition Rig Automatic Calibration</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>favicon.ico</normaloff>favicon.ico</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <widget class="QPushButton" name="load_image_button">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>1151</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Load New Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="original_label">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>65</y>
+     <width>231</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Perspective 1 Original Image</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="processed_label">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>65</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Perspective 1 Hexagon Detection</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="original_image">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>100</y>
+     <width>371</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="processed_image">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>100</y>
+     <width>371</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="info_label">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>410</y>
+     <width>341</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(240, 240, 240);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas,Courier New,monospace'; font-size:8pt; color:#000000;&quot;&gt;CITS4402 COMPUTER VISION - PROJECT&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas,Courier New,monospace'; font-size:8pt; color:#000000;&quot;&gt;HOLOGRAPHIC ACQUISITION RIG AUTOMATIC CALIBRATION&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas,Courier New,monospace'; font-size:8pt; color:#000000;&quot;&gt;ERWIN BAUERNSCHMITT, ALIAN HAIDAR, LUKE KIRBY&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas,Courier New,monospace'; font-size:8pt; color:#000000;&quot;&gt; 22964301, 22900426, 22885101&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="previous_image_button">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>430</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Previous Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="render_image">
+   <property name="geometry">
+    <rect>
+     <x>800</x>
+     <y>100</y>
+     <width>371</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="render_label">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>65</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>3D Render</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="perspective_number">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>390</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Perspective 1 of 3</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="next_image_button">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>430</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Next Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="delete_image_button">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>430</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Delete Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </widget>
+  <zorder>load_image_button</zorder>
+  <zorder>processed_label</zorder>
+  <zorder>original_label</zorder>
+  <zorder>original_image</zorder>
+  <zorder>processed_image</zorder>
+  <zorder>info_label</zorder>
+  <zorder>previous_image_button</zorder>
+  <zorder>render_image</zorder>
+  <zorder>render_label</zorder>
+  <zorder>perspective_number</zorder>
+  <zorder>next_image_button</zorder>
+  <zorder>delete_image_button</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
