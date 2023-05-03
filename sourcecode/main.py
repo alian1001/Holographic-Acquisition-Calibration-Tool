@@ -17,9 +17,8 @@ class MainWindow(QtWidgets.QWidget):
     def __init__(self, uipath):
         super().__init__()
         uic.loadUi(uipath, self)
-
+        
         self.load_image_button.clicked.connect(self.loadImage)
-        self.colour_segment_button.clicked.connect(self.colourSegmentation)
 
     def loadImage(self):
             ''' Opens file explorer to allow image selection,
@@ -63,41 +62,31 @@ class MainWindow(QtWidgets.QWidget):
                 # Converts cv2 image from the BGR to the HSV colour space for further processing.
                 self.hsvimage = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
 
-                self.colourSegmentation()
+                blue = self.colourSegmentation("blue")
+                red = self.colourSegmentation("red")
+                green = self.colourSegmentation("green")
+                combined = blue + red + green
+                # Converts cv2 image to QImage for display.
+                im_np = np.array(combined)  
+                qimage = QImage(im_np.data, im_np.shape[1], im_np.shape[0], combined.strides[0], QImage.Format.Format_Grayscale8)
+
+                # Displays processed image in the right panel.
+                self.pixmap = QPixmap.fromImage(qimage)
+                self.processed_image.setPixmap(self.pixmap)
 
 
-    def colourSegmentation(self): 
+    def colourSegmentation(self, request): 
             """ Segments image based on input hue range,
                 Displays segmented binarised image in right panel.
             """ 
-            
-            #lower_thresh_cv2 = int(self.lower_thresh / 2)
-            #upper_thresh_cv2 = int(self.upper_thresh / 2)
 
+            colours = {"blue": [90,130,100,60], "red": [169,179,100,60], "green": [45,85,90,50] }
 
-            # BLUE VALUES
+            lower_thresh_cv2 = colours[request][0]
+            upper_thresh_cv2 = colours[request][1]
 
-            lower_thresh_cv2 = 90
-            upper_thresh_cv2 = 130
-
-            lower_hsv = np.array([lower_thresh_cv2, 100, 60])
+            lower_hsv = np.array([lower_thresh_cv2, colours[request][2], colours[request][3]])
             upper_hsv = np.array([upper_thresh_cv2, 255, 255])
-
-            # RED VALUES
-
-            # lower_thresh_cv2 = 169
-            # upper_thresh_cv2 = 179
-
-            # lower_hsv = np.array([lower_thresh_cv2, 100, 60])
-            # upper_hsv = np.array([upper_thresh_cv2, 255, 255])
-
-            # GREEN VALUES 
-
-            # lower_thresh_cv2 = 45
-            # upper_thresh_cv2 = 85
-
-            # lower_hsv = np.array([lower_thresh_cv2, 90, 50])
-            # upper_hsv = np.array([upper_thresh_cv2, 255, 255])
 
 
             thresholding_mask = cv2.inRange(self.hsvimage, lower_hsv, upper_hsv)
@@ -117,6 +106,7 @@ class MainWindow(QtWidgets.QWidget):
 
             # Sets flag to indicate that image has been processed.
             self.image_processed = 1
+            return(segmented_image)
 
 if __name__ == '__main__':
     uiname = "gui.ui"
