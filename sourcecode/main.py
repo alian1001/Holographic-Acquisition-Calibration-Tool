@@ -77,11 +77,11 @@ class MainWindow(QtWidgets.QWidget):
 
             # BLUE VALUES
 
-            # lower_thresh_cv2 = 90
-            # upper_thresh_cv2 = 130
+            lower_thresh_cv2 = 90
+            upper_thresh_cv2 = 130
 
-            # lower_hsv = np.array([lower_thresh_cv2, 100, 60])
-            # upper_hsv = np.array([upper_thresh_cv2, 255, 255])
+            lower_hsv = np.array([lower_thresh_cv2, 100, 60])
+            upper_hsv = np.array([upper_thresh_cv2, 255, 255])
 
             # RED VALUES
 
@@ -99,12 +99,6 @@ class MainWindow(QtWidgets.QWidget):
             # lower_hsv = np.array([lower_thresh_cv2, 90, 50])
             # upper_hsv = np.array([upper_thresh_cv2, 255, 255])
 
-
-            lower_thresh_cv2 = 45
-            upper_thresh_cv2 = 85
-
-            lower_hsv = np.array([lower_thresh_cv2, 90, 50])
-            upper_hsv = np.array([upper_thresh_cv2, 255, 255])
 
             thresholding_mask = cv2.inRange(self.hsvimage, lower_hsv, upper_hsv)
 
