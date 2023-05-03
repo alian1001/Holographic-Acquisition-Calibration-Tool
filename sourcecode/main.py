@@ -2,7 +2,7 @@
 
 import sys
 import random
-from PySide6 import QtCore, QtWidgets, QtGui
+# from PySide6 import QtCore, QtWidgets, QtGui
 import os
 import numpy as np
 from PyQt6 import QtWidgets, uic
@@ -10,8 +10,8 @@ from PyQt6.QtWidgets import QLabel, QApplication, QMainWindow
 from PyQt6.QtCore import Qt 
 from PyQt6.QtGui import QPixmap, QImage, QColor
 import cv2
-import functions
-from functions import loadImage
+# import functions
+# from functions import loadImage
 
 class MainWindow(QtWidgets.QWidget):
     def __init__(self, uipath):
@@ -73,10 +73,37 @@ class MainWindow(QtWidgets.QWidget):
             
             #lower_thresh_cv2 = int(self.lower_thresh / 2)
             #upper_thresh_cv2 = int(self.upper_thresh / 2)
-            lower_thresh_cv2 = 0
-            upper_thresh_cv2 = 100
 
-            lower_hsv = np.array([lower_thresh_cv2, 0, 0])
+
+            # BLUE VALUES
+
+            # lower_thresh_cv2 = 90
+            # upper_thresh_cv2 = 130
+
+            # lower_hsv = np.array([lower_thresh_cv2, 100, 60])
+            # upper_hsv = np.array([upper_thresh_cv2, 255, 255])
+
+            # RED VALUES
+
+            # lower_thresh_cv2 = 169
+            # upper_thresh_cv2 = 179
+
+            # lower_hsv = np.array([lower_thresh_cv2, 100, 60])
+            # upper_hsv = np.array([upper_thresh_cv2, 255, 255])
+
+            # GREEN VALUES 
+
+            # lower_thresh_cv2 = 45
+            # upper_thresh_cv2 = 85
+
+            # lower_hsv = np.array([lower_thresh_cv2, 90, 50])
+            # upper_hsv = np.array([upper_thresh_cv2, 255, 255])
+
+
+            lower_thresh_cv2 = 45
+            upper_thresh_cv2 = 85
+
+            lower_hsv = np.array([lower_thresh_cv2, 90, 50])
             upper_hsv = np.array([upper_thresh_cv2, 255, 255])
 
             thresholding_mask = cv2.inRange(self.hsvimage, lower_hsv, upper_hsv)
