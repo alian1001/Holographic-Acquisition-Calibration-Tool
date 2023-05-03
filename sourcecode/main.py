@@ -127,7 +127,7 @@ class MainWindow(QtWidgets.QWidget):
 if __name__ == '__main__':
     uiname = "gui.ui"
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    uipath = dir_path + "\\" + uiname
+    uipath = os.path.join(dir_path, uiname)
 
     # Runs gui
     app = QtWidgets.QApplication(sys.argv)
