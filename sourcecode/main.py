@@ -10,6 +10,7 @@ from PyQt6.QtWidgets import QLabel, QApplication, QMainWindow
 from PyQt6.QtCore import Qt 
 from PyQt6.QtGui import QPixmap, QImage, QColor
 import cv2
+import skimage
 # import functions
 # from functions import loadImage
 
@@ -83,7 +84,7 @@ class MainWindow(QtWidgets.QWidget):
                 Displays segmented binarised image in right panel.
             """ 
 
-            colours = {"blue": [90,130,100,60], "red": [169,179,100,60], "green": [45,85,90,50] }
+            colours = {"blue": [90,130,100,60], "red": [169,179,100,60], "green": [40,90,45,40] }
 
             lower_thresh_cv2 = colours[request][0]
             upper_thresh_cv2 = colours[request][1]
