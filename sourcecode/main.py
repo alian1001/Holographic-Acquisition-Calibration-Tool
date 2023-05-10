@@ -92,6 +92,9 @@ class MainWindow(QtWidgets.QWidget):
 
 
 
+
+
+
     def colourSegmentation(self, request): 
             """ Segments image based on input hue range,
                 Displays segmented binarised image in right panel.
@@ -221,6 +224,52 @@ class MainWindow(QtWidgets.QWidget):
 
         return clusters
 
+    def cluster_analysis(self, clusters):
+        ordered_clusters = []
+
+        for i in range(len(clusters)):
+           
+
+            blue = clusters[i][0]
+
+            temp_clust = [blue,0,0,0,0,0]
+
+            for j in range(1, len(clusters[i])):
+                point_of_interest = clusters[i][j]
+                shortest_x = 10000000
+                shortest_y = 10000000
+                longest_x = 10000000
+                longest_y = 10000000
+                #Looking for first clockwise dot
+                if(point_of_interest[4] - blue[4] >= 0):
+                    if np.absolute(point_of_interest[4] - blue[4]) < shortest_x:
+                        temp_clust[1] = point_of_interest
+                    else:
+                        temp_clust[2] = point_of_interest
+
+                #Looking for second clockwise dot
+
+
+
+                #Looking for bottom dot
+
+
+
+                #Looking for first anticlockwise dot
+                if(point_of_interest[4] - blue[4] < 0):
+                    if np.absolute(point_of_interest[4] - blue[4]) < shortest_x:
+                        temp_clust[1] = point_of_interest
+                    else:
+                        temp_clust[2] = point_of_interest
+
+
+
+                #Looking for second anticlockwise dot
+                
+                    
+
+                
+                
 
 
 
