@@ -81,10 +81,18 @@ class MainWindow(QtWidgets.QWidget):
 
                 clusters = self.groupings([blue_boxes, green_boxes, red_boxes])
 
-                for i in range(len(clusters)):
-                    for j in range(len(clusters[i])):
+                # for i in range(len(clusters)):
+                #     for j in range(len(clusters[i])):
 
-                        clust = cv2.rectangle(self.image, (clusters[i][j][0],clusters[i][j][1]), (clusters[i][j][0] + clusters[i][j][2], clusters[i][j][1] + clusters[i][j][3]), clusters[i][j][-1])
+                #         clust = cv2.rectangle(self.image, (clusters[i][j][0],clusters[i][j][1]), (clusters[i][j][0] + clusters[i][j][2], clusters[i][j][1] + clusters[i][j][3]), clusters[i][j][-1])
+                        
+                #         self.display_colour(clust, self.render_image)
+
+                sorted_clusters = self.cluster_analysis(clusters)
+                for i in range(len(sorted_clusters)):
+                    for j in range(len(sorted_clusters[i])):
+
+                        clust = cv2.rectangle(self.image, (sorted_clusters[i][j][0],sorted_clusters[i][j][1]), (sorted_clusters[i][j][0] + sorted_clusters[i][j][2], sorted_clusters[i][j][1] + sorted_clusters[i][j][3]), sorted_clusters[i][j][-1])
                         
                         self.display_colour(clust, self.render_image)
 
@@ -226,46 +234,70 @@ class MainWindow(QtWidgets.QWidget):
 
     def cluster_analysis(self, clusters):
         ordered_clusters = []
+        
 
-        for i in range(len(clusters)):
-           
+        for cluster in clusters:
+            cluster = cluster.copy()
 
-            blue = clusters[i][0]
+            blue = cluster[0]
+            blue_x_centroid = blue[4]
+            blue_y_centroid = blue[5]
+            cluster.pop(0)
 
             temp_clust = [blue,0,0,0,0,0]
+            # temp_clust = [point_0, point_1, point_2, point_3, point_4, point_5] (clockwise from blue).
 
-            for j in range(1, len(clusters[i])):
-                point_of_interest = clusters[i][j]
-                shortest_x = 10000000
-                shortest_y = 10000000
-                longest_x = 10000000
-                longest_y = 10000000
-                #Looking for first clockwise dot
-                if(point_of_interest[4] - blue[4] >= 0):
-                    if np.absolute(point_of_interest[4] - blue[4]) < shortest_x:
-                        temp_clust[1] = point_of_interest
-                    else:
-                        temp_clust[2] = point_of_interest
+            point_id_sequence = [3, 1, 5, 2, 4]
 
-                #Looking for second clockwise dot
+            for point_number in point_id_sequence:
 
-
-
-                #Looking for bottom dot
+                if point_number == 1:
+                    min_y = blue_y_centroid + 1000
+                    confirmed_point = 0
+                    for i in range(len(cluster)):
+                        if cluster[i][4] > blue_x_centroid:
+                            if cluster[i][5] < min_y:
+                                min_y = cluster[i][5]
+                                temp_clust[1] = cluster[i]
+                                confirmed_point = i
+                    cluster.pop(confirmed_point)
 
 
+                if point_number == 2:
+                    for i in range(len(cluster)):
+                        if cluster[i][4] > blue_x_centroid:
+                            temp_clust[2] = cluster[i]
 
-                #Looking for first anticlockwise dot
-                if(point_of_interest[4] - blue[4] < 0):
-                    if np.absolute(point_of_interest[4] - blue[4]) < shortest_x:
-                        temp_clust[1] = point_of_interest
-                    else:
-                        temp_clust[2] = point_of_interest
+                if point_number == 3:
+                    max_y = blue_y_centroid
+                    confirmed_point = 0
+                    for i in range(len(cluster)):
+                        if cluster[i][5] > max_y:
+                            max_y = cluster[i][5]
+                            temp_clust[3] = cluster[i]
+                            confirmed_point = i
+                    cluster.pop(confirmed_point)
+                    
+                    
 
+                if point_number == 4:
+                    for i in range(len(cluster)):
+                        if cluster[i][4] < blue_x_centroid:
+                            temp_clust[4] = cluster[i]
 
+                if point_number == 5:
+                    min_y = blue_y_centroid + 1000
+                    confirmed_point = 0
+                    for i in range(len(cluster)):
+                        if cluster[i][4] < blue_x_centroid:
+                            if cluster[i][5] < min_y:
+                                min_y = cluster[i][5]
+                                temp_clust[5] = cluster[i]
+                                confirmed_point = i
+                    cluster.pop(confirmed_point)
 
-                #Looking for second anticlockwise dot
-                
+            ordered_clusters.append(temp_clust)
+        return ordered_clusters
                     
 
                 
