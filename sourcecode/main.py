@@ -37,20 +37,21 @@ class MainWindow(QtWidgets.QWidget):
 
                 # Reads image in colour.
                 self.image = cv2.imread(filename = file_path)
+                self.resized_image = self.image.copy()
 
                 # Resizes image to display window size, keeping aspect ratio.
-                if (self.image.shape[1] / 371) > (self.image.shape[0] / 271):
+                if (self.resized_image.shape[1] / 371) > (self.resized_image.shape[0] / 271):
                     width = 371
-                    height = int(self.image.shape[0] / self.image.shape[1] * 371)
+                    height = int(self.resized_image.shape[0] / self.resized_image.shape[1] * 371)
                     dim = (width, height)
                 else:
                     height = 271
-                    width = int(self.image.shape[1] / self.image.shape[0] * 271)
+                    width = int(self.resized_image.shape[1] / self.resized_image.shape[0] * 271)
                     dim = (width, height)
                 
                 # Converts cv2 image to QImage for display.
-                self.image = cv2.resize(self.image, dim, interpolation = cv2.INTER_AREA)
-                self.colourimage = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+                self.resized_image = cv2.resize(self.resized_image, dim, interpolation = cv2.INTER_AREA)
+                self.colourimage = cv2.cvtColor(self.resized_image, cv2.COLOR_BGR2RGB)
 
                 self.display_colour(self.colourimage,self.original_image)
 
@@ -69,11 +70,11 @@ class MainWindow(QtWidgets.QWidget):
                 green_boxes = self.object_analysis(green)
 
                 for i in range(len(red_boxes)):
-                    boxes = cv2.rectangle(self.image, (red_boxes[i][0],red_boxes[i][1]), (red_boxes[i][0] + red_boxes[i][2], red_boxes[i][1] - red_boxes[i][3]), [255, 0,0])
+                    boxes = cv2.rectangle(self.image, (red_boxes[i][0],red_boxes[i][1]), (red_boxes[i][0] + red_boxes[i][2], red_boxes[i][1] + red_boxes[i][3]), [255, 0,0])
                 for i in range(len(blue_boxes)):
-                    boxes = cv2.rectangle(self.image, (blue_boxes[i][0],blue_boxes[i][1]), (blue_boxes[i][0] + blue_boxes[i][2], blue_boxes[i][1] - blue_boxes[i][3]), [0, 0,255])
+                    boxes = cv2.rectangle(self.image, (blue_boxes[i][0],blue_boxes[i][1]), (blue_boxes[i][0] + blue_boxes[i][2], blue_boxes[i][1] + blue_boxes[i][3]), [0, 0,255])
                 for i in range(len(green_boxes)):
-                    boxes = cv2.rectangle(self.image, (green_boxes[i][0],green_boxes[i][1]), (green_boxes[i][0] + green_boxes[i][2], green_boxes[i][1] - green_boxes[i][3]), [0, 255,0])
+                    boxes = cv2.rectangle(self.image, (green_boxes[i][0],green_boxes[i][1]), (green_boxes[i][0] + green_boxes[i][2], green_boxes[i][1] + green_boxes[i][3]), [0, 255,0])
 
                 self.display_colour(boxes, self.render_image)
                 
@@ -124,22 +125,55 @@ class MainWindow(QtWidgets.QWidget):
             h = stats[i, cv2.CC_STAT_HEIGHT]
             area = stats[i, cv2.CC_STAT_AREA]
             (cX, cY) = centroids[i]
-            if 4 <= area <= 20: 
+            if 12 <= area <= 300: 
                 viable.append([x,y,w,h])
 
         return(viable)
 
     def display_colour(self, image, location):
-        im_np = np.array(image)  
-        qimage = QImage(im_np.data, im_np.shape[1], im_np.shape[0], image.strides[0], QImage.Format.Format_RGB888)
+        large_display_image = image.copy()
+        large_display_image = cv2.cvtColor(large_display_image, cv2.COLOR_RGB2BGR)
+        cv2.imshow("Full Resolution", large_display_image)
+        
+        resized_image = image.copy()
+
+        # Resizes image to display window size, keeping aspect ratio.
+        if (resized_image.shape[1] / 371) > (resized_image.shape[0] / 271):
+            width = 371
+            height = int(resized_image.shape[0] / resized_image.shape[1] * 371)
+            dim = (width, height)
+        else:
+            height = 271
+            width = int(resized_image.shape[1] / resized_image.shape[0] * 271)
+            dim = (width, height)
+        
+        # Converts cv2 image to QImage for display.
+        resized_image = cv2.resize(resized_image, dim, interpolation = cv2.INTER_AREA)
+        im_np = np.array(resized_image)  
+        qimage = QImage(im_np.data, im_np.shape[1], im_np.shape[0], resized_image.strides[0], QImage.Format.Format_RGB888)
 
         # Displays processed image in the right panel.
         self.pixmap = QPixmap.fromImage(qimage)
         location.setPixmap(self.pixmap)
 
+
     def display_greyscale(self, image, location):
-        im_np = np.array(image)  
-        qimage = QImage(im_np.data, im_np.shape[1], im_np.shape[0], image.strides[0], QImage.Format.Format_Grayscale8)
+        resized_image = image.copy()
+
+        # Resizes image to display window size, keeping aspect ratio.
+        if (resized_image.shape[1] / 371) > (resized_image.shape[0] / 271):
+            width = 371
+            height = int(resized_image.shape[0] / resized_image.shape[1] * 371)
+            dim = (width, height)
+        else:
+            height = 271
+            width = int(resized_image.shape[1] / resized_image.shape[0] * 271)
+            dim = (width, height)
+        
+        # Converts cv2 image to QImage for display.
+        resized_image = cv2.resize(resized_image, dim, interpolation = cv2.INTER_AREA)
+        im_np = np.array(resized_image)  
+        qimage = QImage(im_np.data, im_np.shape[1], im_np.shape[0], resized_image.strides[0], QImage.Format.Format_Grayscale8)
 
         # Displays processed image in the right panel.
         self.pixmap = QPixmap.fromImage(qimage)
