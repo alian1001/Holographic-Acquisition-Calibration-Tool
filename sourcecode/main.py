@@ -69,21 +69,23 @@ class MainWindow(QtWidgets.QWidget):
                 red_boxes = self.object_analysis(red)
                 green_boxes = self.object_analysis(green)
 
-                for i in range(len(red_boxes)):
-                    boxes = cv2.rectangle(self.image, (red_boxes[i][0],red_boxes[i][1]), (red_boxes[i][0] + red_boxes[i][2], red_boxes[i][1] + red_boxes[i][3]), [255, 0,0])
-                for i in range(len(blue_boxes)):
-                    boxes = cv2.rectangle(self.image, (blue_boxes[i][0],blue_boxes[i][1]), (blue_boxes[i][0] + blue_boxes[i][2], blue_boxes[i][1] + blue_boxes[i][3]), [0, 0,255])
-                for i in range(len(green_boxes)):
-                    boxes = cv2.rectangle(self.image, (green_boxes[i][0],green_boxes[i][1]), (green_boxes[i][0] + green_boxes[i][2], green_boxes[i][1] + green_boxes[i][3]), [0, 255,0])
+                # for i in range(len(red_boxes)):
+                #     boxes = cv2.rectangle(self.image, (red_boxes[i][0],red_boxes[i][1]), (red_boxes[i][0] + red_boxes[i][2], red_boxes[i][1] + red_boxes[i][3]), [255, 0,0])
+                # for i in range(len(blue_boxes)):
+                #     boxes = cv2.rectangle(self.image, (blue_boxes[i][0],blue_boxes[i][1]), (blue_boxes[i][0] + blue_boxes[i][2], blue_boxes[i][1] + blue_boxes[i][3]), [0, 0,255])
+                # for i in range(len(green_boxes)):
+                #     boxes = cv2.rectangle(self.image, (green_boxes[i][0],green_boxes[i][1]), (green_boxes[i][0] + green_boxes[i][2], green_boxes[i][1] + green_boxes[i][3]), [0, 255,0])
 
-                self.display_colour(boxes, self.render_image)
+                # self.display_colour(boxes, self.render_image)
 
 
                 clusters = self.groupings([blue_boxes, green_boxes, red_boxes])
 
                 for i in range(len(clusters)):
                     for j in range(len(clusters[i])):
+
                         clust = cv2.rectangle(self.image, (clusters[i][j][0],clusters[i][j][1]), (clusters[i][j][0] + clusters[i][j][2], clusters[i][j][1] + clusters[i][j][3]), clusters[i][j][-1])
+                        
                         self.display_colour(clust, self.render_image)
 
 
@@ -136,7 +138,7 @@ class MainWindow(QtWidgets.QWidget):
             area = stats[i, cv2.CC_STAT_AREA]
             (cX, cY) = centroids[i]
             if 12 <= area <= 300: 
-                viable.append([x,y,w,h])
+                viable.append([x,y,w,h,cX,cY])
 
         return(viable)
 
@@ -195,22 +197,24 @@ class MainWindow(QtWidgets.QWidget):
         green = object_list[1]
         red = object_list[2]
         clusters = []
+
         for i in range(len(blue)):
-            blue[i].append([0, 0,255])
+            blue[i].append([0, 0, 255])
             cluster = [blue[i]]
 
 
             for j in range(len(green)):
 
-                if np.sqrt(green[j][4]**2 + blue[i][4]**2) <= 40:
-                    green[j].append([0, 255,0])
-                    cluster.append(green[j])
+                if np.absolute(green[j][4] - blue[i][4]) <= 75 :
+                    if np.absolute(green[j][5] - blue[i][5]) <= 75 :
+                        green[j].append([0, 255,0])
+                        cluster.append(green[j])
 
             for k in range(len(red)):
-                if np.sqrt(red[k][4]**2 + blue[i][4]**2) <= 40:
-
-                    red[k].append([255, 0,0])
-                    cluster.append(red[k])
+                if np.absolute(red[k][4] - blue[i][4]) <= 75 :
+                    if np.absolute(red[k][5] - blue[i][5]) <= 75 :
+                        red[k].append([255, 0,0])
+                        cluster.append(red[k])
 
             if(len(cluster) >= 6):
                 clusters.append(cluster)
