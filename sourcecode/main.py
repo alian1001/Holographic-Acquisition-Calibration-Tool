@@ -69,33 +69,20 @@ class MainWindow(QtWidgets.QWidget):
                 red_boxes = self.object_analysis(red)
                 green_boxes = self.object_analysis(green)
 
-                # for i in range(len(red_boxes)):
-                #     boxes = cv2.rectangle(self.image, (red_boxes[i][0],red_boxes[i][1]), (red_boxes[i][0] + red_boxes[i][2], red_boxes[i][1] + red_boxes[i][3]), [255, 0,0])
-                # for i in range(len(blue_boxes)):
-                #     boxes = cv2.rectangle(self.image, (blue_boxes[i][0],blue_boxes[i][1]), (blue_boxes[i][0] + blue_boxes[i][2], blue_boxes[i][1] + blue_boxes[i][3]), [0, 0,255])
-                # for i in range(len(green_boxes)):
-                #     boxes = cv2.rectangle(self.image, (green_boxes[i][0],green_boxes[i][1]), (green_boxes[i][0] + green_boxes[i][2], green_boxes[i][1] + green_boxes[i][3]), [0, 255,0])
-
-                # self.display_colour(boxes, self.render_image)
-
 
                 clusters = self.groupings([blue_boxes, green_boxes, red_boxes])
 
-                # for i in range(len(clusters)):
-                #     for j in range(len(clusters[i])):
-
-                #         clust = cv2.rectangle(self.image, (clusters[i][j][0],clusters[i][j][1]), (clusters[i][j][0] + clusters[i][j][2], clusters[i][j][1] + clusters[i][j][3]), clusters[i][j][-1])
-                        
-                #         self.display_colour(clust, self.render_image)
-
                 sorted_clusters = self.cluster_analysis(clusters)
+                cluster_names = self.name_clusters(sorted_clusters)
+                print(cluster_names)
                 for i in range(len(sorted_clusters)):
                     for j in range(len(sorted_clusters[i])):
 
                         clust = cv2.rectangle(self.image, (sorted_clusters[i][j][0],sorted_clusters[i][j][1]), (sorted_clusters[i][j][0] + sorted_clusters[i][j][2], sorted_clusters[i][j][1] + sorted_clusters[i][j][3]), sorted_clusters[i][j][-1])
-                        
-                        self.display_colour(clust, self.render_image)
-
+                        #self.display_colour(clust, self.render_image)
+                    named = cv2.putText(self.image, cluster_names[i], org= [sorted_clusters[i][0][0],sorted_clusters[i][0][1]] ,fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale= 0.5, color=[255,0,0])
+                    self.display_colour(named, self.render_image)
+                
 
 
 
@@ -216,18 +203,18 @@ class MainWindow(QtWidgets.QWidget):
 
             for j in range(len(green)):
 
-                if np.absolute(green[j][4] - blue[i][4]) <= 75 :
-                    if np.absolute(green[j][5] - blue[i][5]) <= 75 :
+                if np.absolute(green[j][4] - blue[i][4]) <= 65:
+                    if np.absolute(green[j][5] - blue[i][5]) <= 65 :
                         green[j].append([0, 255,0])
                         cluster.append(green[j])
 
             for k in range(len(red)):
-                if np.absolute(red[k][4] - blue[i][4]) <= 75 :
-                    if np.absolute(red[k][5] - blue[i][5]) <= 75 :
+                if np.absolute(red[k][4] - blue[i][4]) <= 65:
+                    if np.absolute(red[k][5] - blue[i][5]) <= 65 :
                         red[k].append([255, 0,0])
                         cluster.append(red[k])
 
-            if(len(cluster) >= 6):
+            if(len(cluster) == 6):
                 clusters.append(cluster)
 
         return clusters
@@ -301,8 +288,21 @@ class MainWindow(QtWidgets.QWidget):
                     
 
                 
-                
-
+    def name_clusters(self, sorted_clusters):
+        names = []
+        for cluster in sorted_clusters:
+            name = "HexaTarget_"
+            for point in cluster:
+                point_id = point[-1]
+                if point_id == [255,0,0]:
+                    colour = "R"
+                if point_id == [0,255,0]:
+                    colour = "G"
+                if point_id == [0,0,255]:
+                    colour = "B"
+                name += colour
+            names.append(name)
+        return names
 
 
 
