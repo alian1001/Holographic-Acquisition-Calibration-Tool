@@ -29,7 +29,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Holographic Acquisition Rig Automatic Calibration</string>
+   <string>Automatic Calibrator for Holographic Acquisition Rig</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -145,8 +145,8 @@
   <widget class="QTextBrowser" name="info_label">
    <property name="geometry">
     <rect>
-     <x>820</x>
-     <y>410</y>
+     <x>833</x>
+     <y>417</y>
      <width>341</width>
      <height>61</height>
     </rect>
