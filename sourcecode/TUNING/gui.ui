@@ -1,0 +1,1097 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1200</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1200</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+    <stylestrategy>PreferDefault</stylestrategy>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Colour Segmentation Threshold Tuner</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>favicon.ico</normaloff>favicon.ico</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <widget class="QPushButton" name="load_image_button">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>1161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Load Images</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="original_label">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>70</y>
+     <width>240</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Target 0: Original Image</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="processed_label">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>70</y>
+     <width>240</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Target 0: Colour Segmented</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="original_image">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>560</width>
+     <height>400</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="processed_image">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>110</y>
+     <width>560</width>
+     <height>400</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="previous_image_button">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>550</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Previous Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="perspective_number">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>520</y>
+     <width>151</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Target 0 of 0</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="next_image_button">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>600</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Next Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>520</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Red1 Lower</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="hue_r1l">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>551</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>179</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>560</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>H</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>590</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>S</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>620</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>V</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="saturation_r1l">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>581</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="value_r1l">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>611</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>560</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>H</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="value_r1u">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>611</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="hue_r1u">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>551</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>179</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>590</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>S</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="saturation_r1u">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>581</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>620</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>V</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>520</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Red1 Upper</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>560</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>H</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="value_r2l">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>611</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="hue_r2l">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>551</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>179</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>590</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>S</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="saturation_r2l">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>581</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_11">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>620</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>V</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>520</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Red2 Lower</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_13">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>560</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>H</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="value_r2u">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>611</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="hue_r2u">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>551</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>179</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_14">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>590</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>S</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="saturation_r2u">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>581</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_15">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>620</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>V</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_16">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>520</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Red2 Upper</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_17">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>560</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>H</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="value_gl">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>611</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="hue_gl">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>551</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>179</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_18">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>590</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>S</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="saturation_gl">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>581</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_19">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>620</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>V</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_20">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>520</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Green Lower</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_21">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>560</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>H</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="value_gu">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>611</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="hue_gu">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>551</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>179</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_22">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>590</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>S</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="saturation_gu">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>581</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_23">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>620</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>V</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_24">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>520</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Green Upper</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_25">
+   <property name="geometry">
+    <rect>
+     <x>970</x>
+     <y>560</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>H</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="value_bl">
+   <property name="geometry">
+    <rect>
+     <x>990</x>
+     <y>611</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="hue_bl">
+   <property name="geometry">
+    <rect>
+     <x>990</x>
+     <y>551</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>179</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_26">
+   <property name="geometry">
+    <rect>
+     <x>970</x>
+     <y>590</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>S</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="saturation_bl">
+   <property name="geometry">
+    <rect>
+     <x>990</x>
+     <y>581</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_27">
+   <property name="geometry">
+    <rect>
+     <x>970</x>
+     <y>620</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>V</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_28">
+   <property name="geometry">
+    <rect>
+     <x>970</x>
+     <y>520</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Blue Lower</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="value_bu">
+   <property name="geometry">
+    <rect>
+     <x>1100</x>
+     <y>611</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_30">
+   <property name="geometry">
+    <rect>
+     <x>1080</x>
+     <y>520</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Blue Upper</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="hue_bu">
+   <property name="geometry">
+    <rect>
+     <x>1100</x>
+     <y>551</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>179</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_31">
+   <property name="geometry">
+    <rect>
+     <x>1080</x>
+     <y>590</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>S</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_32">
+   <property name="geometry">
+    <rect>
+     <x>1080</x>
+     <y>620</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>V</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="saturation_bu">
+   <property name="geometry">
+    <rect>
+     <x>1100</x>
+     <y>581</y>
+     <width>42</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_33">
+   <property name="geometry">
+    <rect>
+     <x>1080</x>
+     <y>560</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>H</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="colour_r1l">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>550</y>
+     <width>21</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="colour_r1u">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>550</y>
+     <width>21</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="colour_r2l">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>550</y>
+     <width>21</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="colour_r2u">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>550</y>
+     <width>21</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="colour_gl">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>550</y>
+     <width>21</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="colour_gu">
+   <property name="geometry">
+    <rect>
+     <x>900</x>
+     <y>550</y>
+     <width>21</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="colour_bl">
+   <property name="geometry">
+    <rect>
+     <x>1040</x>
+     <y>550</y>
+     <width>21</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="colour_bu">
+   <property name="geometry">
+    <rect>
+     <x>1150</x>
+     <y>550</y>
+     <width>21</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>load_image_button</zorder>
+  <zorder>processed_label</zorder>
+  <zorder>original_label</zorder>
+  <zorder>original_image</zorder>
+  <zorder>processed_image</zorder>
+  <zorder>previous_image_button</zorder>
+  <zorder>perspective_number</zorder>
+  <zorder>next_image_button</zorder>
+  <zorder>label</zorder>
+  <zorder>hue_r1l</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>saturation_r1l</zorder>
+  <zorder>value_r1l</zorder>
+  <zorder>label_5</zorder>
+  <zorder>value_r1u</zorder>
+  <zorder>hue_r1u</zorder>
+  <zorder>label_6</zorder>
+  <zorder>saturation_r1u</zorder>
+  <zorder>label_7</zorder>
+  <zorder>label_8</zorder>
+  <zorder>label_9</zorder>
+  <zorder>value_r2l</zorder>
+  <zorder>hue_r2l</zorder>
+  <zorder>label_10</zorder>
+  <zorder>saturation_r2l</zorder>
+  <zorder>label_11</zorder>
+  <zorder>label_12</zorder>
+  <zorder>label_13</zorder>
+  <zorder>value_r2u</zorder>
+  <zorder>hue_r2u</zorder>
+  <zorder>label_14</zorder>
+  <zorder>saturation_r2u</zorder>
+  <zorder>label_15</zorder>
+  <zorder>label_16</zorder>
+  <zorder>label_17</zorder>
+  <zorder>value_gl</zorder>
+  <zorder>hue_gl</zorder>
+  <zorder>label_18</zorder>
+  <zorder>saturation_gl</zorder>
+  <zorder>label_19</zorder>
+  <zorder>label_20</zorder>
+  <zorder>label_21</zorder>
+  <zorder>value_gu</zorder>
+  <zorder>hue_gu</zorder>
+  <zorder>label_22</zorder>
+  <zorder>saturation_gu</zorder>
+  <zorder>label_23</zorder>
+  <zorder>label_24</zorder>
+  <zorder>label_25</zorder>
+  <zorder>value_bl</zorder>
+  <zorder>hue_bl</zorder>
+  <zorder>label_26</zorder>
+  <zorder>saturation_bl</zorder>
+  <zorder>label_27</zorder>
+  <zorder>label_28</zorder>
+  <zorder>value_bu</zorder>
+  <zorder>label_30</zorder>
+  <zorder>hue_bu</zorder>
+  <zorder>label_31</zorder>
+  <zorder>label_32</zorder>
+  <zorder>saturation_bu</zorder>
+  <zorder>label_33</zorder>
+  <zorder>colour_r1l</zorder>
+  <zorder>colour_r1u</zorder>
+  <zorder>colour_r2l</zorder>
+  <zorder>colour_r2u</zorder>
+  <zorder>colour_gl</zorder>
+  <zorder>colour_gu</zorder>
+  <zorder>colour_bl</zorder>
+  <zorder>colour_bu</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
