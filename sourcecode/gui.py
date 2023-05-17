@@ -4,6 +4,7 @@ from PyQt6 import QtWidgets, uic
 from PyQt6.QtGui import QPixmap, QImage
 import cv2
 from functions import HexaTargetIdentifier
+import json
 
 
 class CalibratorGUI(QtWidgets.QWidget):
@@ -20,6 +21,7 @@ class CalibratorGUI(QtWidgets.QWidget):
         self.images = []
         self.labelled_images = []
         self.images_with_info = []
+        self.camera_info = []
         self.current_image = 0
 
 
@@ -75,6 +77,22 @@ class CalibratorGUI(QtWidgets.QWidget):
                 self.original_label.setText(f"Perspective {self.current_image}: Original Image")
                 self.processed_label.setText(f"Perspective {self.current_image}: Labelled HexaTargets")
 
+                self.load_camera_calibration_file()
+
+        
+    def load_camera_calibration_file(self):
+        selected_file = QtWidgets.QFileDialog.getOpenFileName(self, "Select json File", os.path.dirname(os.path.realpath(__file__)), "Json File (*json)")
+        file_path = selected_file[0]
+        if file_path != "":
+            with open(file_path) as file:
+                calibration_data = json.load(file)
+                cx = calibration_data["cx"]["val"]
+                cy = calibration_data["cy"]["val"]
+                f = calibration_data["f"]["val"]
+                
+                cam_details = [cx, cy, f]
+                self.camera_info.append(cam_details)
+                    
 
 
     def display_image(self, image, location, format):
