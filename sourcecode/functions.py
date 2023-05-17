@@ -19,8 +19,9 @@ class HexaTargetIdentifier:
             image = self.image.copy()
             hsvimage = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
-            # Defines threshold values where colours = {colour: [lower_hsv_threshold, upper_hsv_threshold]}.
-            colours = {"blue": [[90,100,60],[130,255,255]], "red": [[169,100,60],[179,255,255]], "green": [[40,45,40],[90,255,255]]}
+            # Defines threshold values where colours = {colour: [lower_hsv_threshold, upper_hsv_threshold]}
+            # colours = {"blue": [[90,100,60],[130,255,255]], "red": [[169,100,60],[179,255,255]], "green": [[40,45,40],[90,255,255]]}
+            colours = {"blue": [[90,80,60],[130,255,255]], "red1": [[160,80,60],[179,255,255]], "red2": [[0,80,60,],[10,255,255]], "green": [[40,30,0],[90,255,255]]}
 
             # Creates thresholding mask.
             lower_hsv_threshold = np.array(colours[requested_colour][0])
@@ -41,7 +42,7 @@ class HexaTargetIdentifier:
             Thresholds the components by their area,
             Returns all the dot-sized objects with their info.
         """
-        (numLabels, labels, stats, centroids) = cv2.connectedComponentsWithStats(segmented_image, cv2.CV_32S)
+        (numLabels, labels, stats, centroids) = cv2.connectedComponentsWithStats(segmented_image, connectivity = 8, ltype = cv2.CV_32S)
 
         dots = []
 
@@ -54,7 +55,7 @@ class HexaTargetIdentifier:
             area = stats[i, cv2.CC_STAT_AREA]
             (cX, cY) = centroids[i]
 
-            if 50 <= area <= 200: 
+            if (5 <= area <= 200) and (0.3 < w / h < 1.7): 
                 dot = [x,y,w,h,cX,cY,area]
                 dots.append(dot)
 
@@ -83,13 +84,13 @@ class HexaTargetIdentifier:
             new_HexaTarget = [blue_dot]
 
             for green_dot in green_dots:
-                if np.absolute(green_dot[4] - blue_dot[4]) <= 75:
-                    if np.absolute(green_dot[5] - blue_dot[5]) <= 75:
+                if np.absolute(green_dot[4] - blue_dot[4]) <= 40:
+                    if 0 < green_dot[5] - blue_dot[5] <= 60:
                         new_HexaTarget.append(green_dot)
 
             for red_dot in red_dots:
-                if np.absolute(red_dot[4] - blue_dot[4]) <= 75:
-                    if np.absolute(red_dot[5] - blue_dot[5]) <= 75:
+                if np.absolute(red_dot[4] - blue_dot[4]) <= 40:
+                    if 0 < red_dot[5] - blue_dot[5] <= 60:
                         new_HexaTarget.append(red_dot)
 
             if (len(new_HexaTarget) == 6):
@@ -199,9 +200,15 @@ class HexaTargetIdentifier:
     def run(self):
         """ Executes the HexTarget identification and labelling.
         """
-        red_segments = self.colour_segment_image("red")
+        red_segments1 = self.colour_segment_image("red1")
+        red_segments2 = self.colour_segment_image("red2")
+        red_segments = red_segments1 + red_segments2
         green_segments = self.colour_segment_image("green")
         blue_segments = self.colour_segment_image("blue")
+
+        # For testing:
+        all_segments = red_segments + blue_segments + green_segments
+        cv2.imshow("all segments", all_segments)
 
         red_dots = self.identify_dots(red_segments)
         green_dots = self.identify_dots(green_segments)
