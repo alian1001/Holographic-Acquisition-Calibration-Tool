@@ -48,18 +48,18 @@ python3 main.py | python main.py
 
 # How to Use
 
-After all the required packages are installed, the program will run automatically when executed. Once ran, the program will gerate a graphical user interface in which the user can interact with. At first sight there are four buttons and three panels that the user can see. The four buttons are:\
-**Load New Image** - This button allows the user to load the images that will be used for the calibration process.\
-**Previous Image** - This button allows the user to scroll back to previous image.\
-**Next Image** - This button allows the user to scroll forward to next image.\
-**Delete Image** - This button allows the user to delete the selected image.\
+After all the required packages are installed, the program will run automatically when executed. Once ran, the program will gerate a graphical user interface in which the user can interact with. At first sight there are four buttons and three panels that the user can see. The four buttons are:
+**Load New Image** - This button allows the user to load the images that will be used for the calibration process.
+**Previous Image** - This button allows the user to scroll back to previous image.
+**Next Image** - This button allows the user to scroll forward to next image.
+**Delete Image** - This button allows the user to delete the selected image.
 
-The three panels are:\
-**Perspective 0: Original Image** - Shows the original Image.\
-**Perspective 0: Labeled HexaTargets** - Shows the location of the RGB dots on the screen.\
-**3D Render** - This panel displays the 3D render of the selected images.\
+The three panels are:
+**Perspective 0: Original Image** - Shows the original Image.
+**Perspective 0: Labeled HexaTargets** - Shows the location of the RGB dots on the screen.
+**3D Render** - This panel displays the 3D render of the selected images.
 
-When all images are selected successfully, it will ask the user to import the selected JSON files specific to the camera image used. This will import all calibration data, suchas the coordinates of the RGB dots, the camera matrix, the distortion coefficients, the rotation and translation vectors.\
+When all images are selected successfully, it will ask the user to import the selected JSON files specific to the camera image used. This will import all calibration data, suchas the coordinates of the RGB dots, the camera matrix, the distortion coefficients, the rotation and translation vectors.
 
-Once all the images are loaded and the JSON files are imported, the user can now select the image that they want to calibrate. The user can scroll through the images using the **Previous Image** and **Next Image** buttons. The user can also delete the selected image using the **Delete Image** button.\
+Once all the images are loaded and the JSON files are imported, the user can now select the image that they want to calibrate. The user can scroll through the images using the **Previous Image** and **Next Image** buttons. The user can also delete the selected image using the **Delete Image** button.
 
