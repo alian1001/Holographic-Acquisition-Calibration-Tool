@@ -132,29 +132,34 @@ class CalibratorGUI(QtWidgets.QWidget):
 
         R = cv2.Rodrigues(query_camera[1])
         
-        print(R, "R")
+        print(R[0], "R")
         print(tvec, "Tvec")
+        print(len(R))
 
+        bottom_row = np.array([[0,0,0,1]])
+        right_column = np.array([[0],[0],[0]])
 
+        extrinsic = np.concatenate((R[0], tvec), 1)
+        extrinsic = np.concatenate((extrinsic, bottom_row), 0)
+        camera_matrix = np.concatenate((camera_matrix, right_column), 1)
+        inverse = np.linalg.inv(camera_matrix*extrinsic)
+        #camera_matrix_inverse = np.linalg.inv(camera_matrix)
+        
+        print(camera_matrix)
+        print(extrinsic)
 
-
-        # for i in range(len(query_HexaTargets)): #Go through every HexaTarget
+        for i in range(len(query_HexaTargets)): #Go through every HexaTarget
             
             
-        #     for j in range(len(query_HexaTargets[i]) -1): #Go through each point that makes the HexaTarget, stopping before it reaches the name at the end
-
-        #         #Removes colour identifier to make a homogeneous numpy array
-        #         query_HexaTargets[i][j] = list(query_HexaTargets[i][j])
-        #         query_HexaTargets[i][j].pop(-1)
-        #         query_HexaTargets[i][j] = np.array(query_HexaTargets[i][j])
+            for j in range(len(query_HexaTargets[i]) -1): #Go through each point that makes the HexaTarget, stopping before it reaches the name at the end
+                print(query_HexaTargets[i][j])
+                #Removes colour identifier to make a homogeneous numpy array
+                query_HexaTargets[i][j] = list(query_HexaTargets[i][j])
+                query_HexaTargets[i][j].pop(-1)
+                query_HexaTargets[i][j] = np.array(query_HexaTargets[i][j])
                 
                 
-        #     object_points = np.float32([query_HexaTargets[i][j][0],query_HexaTargets[i][j][1]])
-
-        #     #Project point into 3D
-        #     locations_3D, jacobian  = cv2.projectPoints(object_points, rvec, tvec, camera_matrix, np.zeros(4))
-        #     print(locations_3D, "\n")
-                    
+            
                 
 
 
