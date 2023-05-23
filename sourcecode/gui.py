@@ -4,6 +4,8 @@ from PyQt6 import QtWidgets, uic
 from PyQt6.QtGui import QPixmap, QImage
 import cv2
 from functions import HexaTargetIdentifier
+import matplotlib as plt
+from mpl_toolkits.mplot3d import axes3d
 import json
 
 
@@ -24,7 +26,8 @@ class CalibratorGUI(QtWidgets.QWidget):
         self.labelled_images = []
         self.images_with_info = []
         self.camera_info = []
-        self.locs_3D = []
+        self.point_locs_3D = []
+        self.cam_locs_3D = []
         self.current_image = 0
 
 
@@ -105,6 +108,9 @@ class CalibratorGUI(QtWidgets.QWidget):
         for i in range(len(self.images_with_info)):
             self.find_camera_PNP(i)
             self.project_points(i)
+            self.find_camera_loc(i)
+
+        
         
 
     
@@ -113,6 +119,7 @@ class CalibratorGUI(QtWidgets.QWidget):
     def find_camera_PNP(self, num):
         query_image = self.images_with_info[num]
         query_camera = self.camera_info[num]
+        print(query_camera)
         test_point = query_image[2][0]
         test_blue = test_point[0]
         point_frame = np.float32([[0,0,0],[15,-15,0],[15,20,0],[0,25,0],[-15,-20,0],[-15,-15,0]])
@@ -127,40 +134,52 @@ class CalibratorGUI(QtWidgets.QWidget):
         rvec = query_camera[1]
         tvec = query_camera[2]
 
-        query_image = self.images_with_info[num][0]
         query_HexaTargets = self.images_with_info[num][2]
 
-        R = cv2.Rodrigues(query_camera[1])
+        R = cv2.Rodrigues(rvec)
         
-
 
         bottom_row = np.array([[0,0,0,1]])
         right_column = np.array([[0],[0],[0]])
 
         extrinsic = np.concatenate((R[0], tvec), 1)
         extrinsic = np.concatenate((extrinsic, bottom_row), 0)
-        #camera_matrix = np.concatenate((camera_matrix, right_column), 1)
-        extrinsic_inverse = np.linalg.inv(extrinsic)
-        camera_matrix_inverse = np.linalg.inv(camera_matrix)
+        camera_matrix = np.concatenate((camera_matrix, right_column), 1)
         
-        print(camera_matrix_inverse)
-        print(extrinsic_inverse)
+        transformation_matrix = np.matmul(camera_matrix, extrinsic)
+        print(transformation_matrix)
 
         for i in range(len(query_HexaTargets)): #Go through every HexaTarget
-            
+            real_world_hexa_coords = []
             
             for j in range(len(query_HexaTargets[i]) -1): #Go through each point that makes the HexaTarget, stopping before it reaches the name at the end
                 #Removes colour identifier to make a homogeneous numpy array
-                image_coords = np.array([[query_HexaTargets[i][j][0]], [query_HexaTargets[i][j][1]], [0]])
+                image_coords = np.array([[query_HexaTargets[i][j][0]],[query_HexaTargets[i][j][1]],[1]])
                 print(image_coords)
-
-                mid_way = np.matmul(camera_matrix_inverse, image_coords)
-                real_world_coords = np.matmul(extrinsic_inverse, mid_way)
+                
+                real_world_coords = np.linalg.lstsq(transformation_matrix, image_coords)
                 print(real_world_coords)
+                real_world_hexa_coords.append(real_world_coords)
+
+                #inverse_transformation = np.linalg.inv(transformation_matrix)
+                #coords_3D = np.matmul(transformation_matrix, )
+
+                #mid_way = np.matmul(camera_matrix_inverse, image_coords)
+                #real_world_coords = np.matmul(extrinsic_inverse, mid_way)
+                #print(real_world_coords)
+            self.point_locs_3D.append(real_world_hexa_coords)
                 
                 
             
-                
+    def find_camera_loc(self, num):
+        query_camrea = self.camera_info[num]
+        rvec = query_camrea[1]
+        tvec = query_camrea[2]
+
+        R = cv2.Rodrigues(rvec)
+        cam_world_position = -np.linalg.inv(R)*tvec
+        self.cam_locs_3D.append(cam_world_position)
+        
 
 
     def display_image(self, image, location, format):
