@@ -1,34 +1,36 @@
-#Main file for CITS4402 Project
+""" CITS4402 COMPUTER VISION - PROJECT
+    HOLOGRAPHIC ACQUISITION RIG AUTOMATIC CALIBRATION
+    ERWIN BAUERNSCHMITT, ALIAN HAIDAR, LUKE KIRKBY
+    22964301, 22900426, 22885101
+"""
+
+### RUNNING NOTES ###
+
+
+
+### GENERAL COMMENTS ### 
 
 import sys
-import random
-from PySide6 import QtCore, QtWidgets, QtGui
+import os
+import numpy as np
+from PyQt6.QtWidgets import QApplication
+from gui import CalibratorGUI
 
-class MyWidget(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
 
-        self.hello = ["Hallo Welt", "Hei maailma", "Hola Mundo", "Привет мир", "Hello, bro"]
+def main():
+    """ Launches the Automatic Callibrator GUI.
+    """
+    # Identifies gui.ui path
+    uiname = "gui.ui"
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    uipath = os.path.join(dir_path, uiname)
 
-        self.button = QtWidgets.QPushButton("Click me!")
-        self.text = QtWidgets.QLabel("Hello World",
-                                     alignment=QtCore.Qt.AlignCenter)
+    # Runs the GUI
+    app = QApplication(sys.argv)
+    main = CalibratorGUI(uipath)
+    main.show()
+    sys.exit(app.exec())    
 
-        self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.addWidget(self.text)
-        self.layout.addWidget(self.button)
 
-        self.button.clicked.connect(self.magic)
-
-    @QtCore.Slot()
-    def magic(self):
-        self.text.setText(random.choice(self.hello))
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
-
-    widget = MyWidget()
-    widget.resize(800, 600)
-    widget.show()
-
-    sys.exit(app.exec())
+if __name__ == '__main__':
+    main()
