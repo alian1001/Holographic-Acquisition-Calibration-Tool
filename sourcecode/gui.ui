@@ -276,6 +276,22 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+O</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="render_button">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>430</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Create 3D Render</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </widget>
   <zorder>load_image_button</zorder>
   <zorder>processed_label</zorder>
   <zorder>original_label</zorder>
@@ -288,6 +304,7 @@ p, li { white-space: pre-wrap; }
   <zorder>perspective_number</zorder>
   <zorder>next_image_button</zorder>
   <zorder>delete_image_button</zorder>
+  <zorder>render_button</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -7,6 +7,7 @@ from functions import HexaTargetIdentifier
 import json
 
 
+
 class CalibratorGUI(QtWidgets.QWidget):
     """ Defines all of the Automatic Calibrator GUI functionality.
     """
@@ -17,11 +18,13 @@ class CalibratorGUI(QtWidgets.QWidget):
         self.previous_image_button.clicked.connect(self.previous_image)
         self.next_image_button.clicked.connect(self.next_image)
         self.delete_image_button.clicked.connect(self.delete_image)
+        self.render_button.clicked.connect(self.create_3D_render)
 
         self.images = []
         self.labelled_images = []
         self.images_with_info = []
         self.camera_info = []
+        self.locs_3D = []
         self.current_image = 0
 
 
@@ -78,6 +81,7 @@ class CalibratorGUI(QtWidgets.QWidget):
                 self.processed_label.setText(f"Perspective {self.current_image}: Labelled HexaTargets")
 
                 self.load_camera_calibration_file()
+                #rvec, tvec = self.calibration(HexaTargets, camera_matrix, new_image)
 
         
     def load_camera_calibration_file(self):
@@ -90,9 +94,68 @@ class CalibratorGUI(QtWidgets.QWidget):
                 cy = calibration_data["cy"]["val"]
                 f = calibration_data["f"]["val"]
                 
-                cam_details = [cx, cy, f]
+                cam_details = [[f, 0, cx],
+                               [0, 0, cy],
+                               [0, 0,  1]]
                 self.camera_info.append(cam_details)
+                return(cam_details)
                     
+    def create_3D_render(self):
+
+        for i in range(len(self.images_with_info)):
+            self.find_camera_PNP(i)
+            self.project_points(i)
+        
+
+    
+
+
+    def find_camera_PNP(self, num):
+        query_image = self.images_with_info[num]
+        query_camera = self.camera_info[num]
+        test_point = query_image[2][0]
+        test_blue = test_point[0]
+        point_frame = np.float32([[0,0,0],[15,-15,0],[15,20,0],[0,25,0],[-15,-20,0],[-15,-15,0]])
+        image_frame = np.float32([[test_blue[0],test_blue[1]],[test_point[1][0],test_point[1][1]],[test_point[2][0],test_point[2][1]],[test_point[3][0],test_point[3][1]],[test_point[4][0],test_point[4][1]],[test_point[5][0],test_point[5][1]]])
+                
+        ret, rvec, tvec = cv2.solvePnP(point_frame, image_frame, np.float64(query_camera), distCoeffs=np.zeros(4))
+        self.camera_info[num] = [query_camera, rvec, tvec, ret]
+    
+    def project_points(self,num):
+        query_camera = self.camera_info[num]
+        camera_matrix = np.float64(query_camera[0])
+        rvec = query_camera[1]
+        tvec = query_camera[2]
+
+        query_image = self.images_with_info[num][0]
+        query_HexaTargets = self.images_with_info[num][2]
+
+        R = cv2.Rodrigues(query_camera[1])
+        
+        print(R, "R")
+        print(tvec, "Tvec")
+
+
+
+
+        # for i in range(len(query_HexaTargets)): #Go through every HexaTarget
+            
+            
+        #     for j in range(len(query_HexaTargets[i]) -1): #Go through each point that makes the HexaTarget, stopping before it reaches the name at the end
+
+        #         #Removes colour identifier to make a homogeneous numpy array
+        #         query_HexaTargets[i][j] = list(query_HexaTargets[i][j])
+        #         query_HexaTargets[i][j].pop(-1)
+        #         query_HexaTargets[i][j] = np.array(query_HexaTargets[i][j])
+                
+                
+        #     object_points = np.float32([query_HexaTargets[i][j][0],query_HexaTargets[i][j][1]])
+
+        #     #Project point into 3D
+        #     locations_3D, jacobian  = cv2.projectPoints(object_points, rvec, tvec, camera_matrix, np.zeros(4))
+        #     print(locations_3D, "\n")
+                    
+                
 
 
     def display_image(self, image, location, format):
