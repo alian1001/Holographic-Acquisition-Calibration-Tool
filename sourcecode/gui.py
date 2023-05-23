@@ -75,8 +75,6 @@ class CalibratorGUI(QtWidgets.QWidget):
                 # Displays the images with labelled HexaTargets.
                 self.display_image(new_image, self.original_image, "BGR")
                 self.display_image(labelled_image, self.processed_image, "RGB")
-                self.display_full_image(labelled_image, "RGB", "Labelled HexaTargets")
-
                 # 
                 self.current_image = len(self.images)
                 self.perspective_number.setText(f"Perspective {self.current_image} of {len(self.images)}")

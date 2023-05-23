@@ -214,10 +214,6 @@ class HexaTargetIdentifier:
         green_segments = self.colour_segment_image("green")
         blue_segments = self.colour_segment_image("blue")
 
-        # For testing:
-        all_segments = red_segments + blue_segments + green_segments
-        cv2.imshow("all segments", all_segments)
-
         red_dots = self.identify_dots(red_segments)
         green_dots = self.identify_dots(green_segments)
         blue_dots = self.identify_dots(blue_segments)
