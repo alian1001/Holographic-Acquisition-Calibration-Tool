@@ -4,9 +4,9 @@ from PyQt6 import QtWidgets, uic
 from PyQt6.QtGui import QPixmap, QImage
 import cv2
 from functions import HexaTargetIdentifier
-import matplotlib as plt
-from mpl_toolkits.mplot3d import axes3d
 import json
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 
 
@@ -112,11 +112,13 @@ class CalibratorGUI(QtWidgets.QWidget):
 
         fig = plt.figure()
         ax1 = fig.add_subplot(111, projection='3d')
-        for i in range(len(self.point_locs_3D)):
-            X = self.point_locs_3D[0]
-            Y = self.point_locs_3D[1]
-            Z = self.point_locs_3D[2]
-            ax1.plot_wireframe(X,Y,Z)
+        
+        # Convert point_locs_3D lists into NumPy arrays
+        X = np.array(self.point_locs_3D[0])
+        Y = np.array(self.point_locs_3D[1])
+        Z = np.array(self.point_locs_3D[2])
+        
+        ax1.plot_wireframe(X, Y, Z)
         ax1.set_xlabel('x axis')
         ax1.set_ylabel('y axis')
         ax1.set_zlabel('z axis')
