@@ -26,8 +26,8 @@ class CalibratorGUI(QtWidgets.QWidget):
         self.labelled_images = []
         self.images_with_info = []
         self.camera_info = []
-        self.point_locs_3D = []
-        self.cam_locs_3D = []
+        self.point_locs_3D = [[],[],[]]
+        self.cam_locs_3D = [[],[],[]]
         self.current_image = 0
 
 
@@ -110,6 +110,18 @@ class CalibratorGUI(QtWidgets.QWidget):
             self.project_points(i)
             self.find_camera_loc(i)
 
+        fig = plt.figure()
+        ax1 = fig.add_subplot(111, projection='3d')
+        for i in range(len(self.point_locs_3D)):
+            X = self.point_locs_3D[0]
+            Y = self.point_locs_3D[1]
+            Z = self.point_locs_3D[2]
+            ax1.plot_wireframe(X,Y,Z)
+        ax1.set_xlabel('x axis')
+        ax1.set_ylabel('y axis')
+        ax1.set_zlabel('z axis')
+        plt.show()
+
         
         
 
@@ -128,6 +140,9 @@ class CalibratorGUI(QtWidgets.QWidget):
         ret, rvec, tvec = cv2.solvePnP(point_frame, image_frame, np.float64(query_camera), distCoeffs=np.zeros(4))
         self.camera_info[num] = [query_camera, rvec, tvec, ret]
     
+
+
+
     def project_points(self,num):
         query_camera = self.camera_info[num]
         camera_matrix = np.float64(query_camera[0])
@@ -159,15 +174,20 @@ class CalibratorGUI(QtWidgets.QWidget):
                 
                 real_world_coords = np.linalg.lstsq(transformation_matrix, image_coords)
                 print(real_world_coords)
-                real_world_hexa_coords.append(real_world_coords)
+                X = real_world_coords[0][0]
+                Y = real_world_coords[0][1]
+                Z = real_world_coords[0][2]
 
+                real_world_hexa_coords=[X,Y,Z]
+                self.point_locs_3D[0].append(X)
+                self.point_locs_3D[1].append(Y)
+                self.point_locs_3D[2].append(Z)
                 #inverse_transformation = np.linalg.inv(transformation_matrix)
                 #coords_3D = np.matmul(transformation_matrix, )
 
                 #mid_way = np.matmul(camera_matrix_inverse, image_coords)
                 #real_world_coords = np.matmul(extrinsic_inverse, mid_way)
                 #print(real_world_coords)
-            self.point_locs_3D.append(real_world_hexa_coords)
                 
                 
             
