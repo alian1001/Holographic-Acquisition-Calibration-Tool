@@ -177,7 +177,7 @@ class CalibratorGUI(QtWidgets.QWidget):
         tvec = query_camrea[2]
 
         R = cv2.Rodrigues(rvec)
-        cam_world_position = -np.linalg.inv(R)*tvec
+        cam_world_position = -np.matmul(np.linalg.inv(R[0]),tvec)
         self.cam_locs_3D.append(cam_world_position)
         
 
