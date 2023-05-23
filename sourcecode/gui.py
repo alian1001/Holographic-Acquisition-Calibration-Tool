@@ -95,7 +95,7 @@ class CalibratorGUI(QtWidgets.QWidget):
                 f = calibration_data["f"]["val"]
                 
                 cam_details = [[f, 0, cx],
-                               [0, 0, cy],
+                               [0, f, cy],
                                [0, 0,  1]]
                 self.camera_info.append(cam_details)
                 return(cam_details)
@@ -132,31 +132,31 @@ class CalibratorGUI(QtWidgets.QWidget):
 
         R = cv2.Rodrigues(query_camera[1])
         
-        print(R[0], "R")
-        print(tvec, "Tvec")
-        print(len(R))
+
 
         bottom_row = np.array([[0,0,0,1]])
         right_column = np.array([[0],[0],[0]])
 
         extrinsic = np.concatenate((R[0], tvec), 1)
         extrinsic = np.concatenate((extrinsic, bottom_row), 0)
-        camera_matrix = np.concatenate((camera_matrix, right_column), 1)
-        inverse = np.linalg.inv(camera_matrix*extrinsic)
-        #camera_matrix_inverse = np.linalg.inv(camera_matrix)
+        #camera_matrix = np.concatenate((camera_matrix, right_column), 1)
+        extrinsic_inverse = np.linalg.inv(extrinsic)
+        camera_matrix_inverse = np.linalg.inv(camera_matrix)
         
-        print(camera_matrix)
-        print(extrinsic)
+        print(camera_matrix_inverse)
+        print(extrinsic_inverse)
 
         for i in range(len(query_HexaTargets)): #Go through every HexaTarget
             
             
             for j in range(len(query_HexaTargets[i]) -1): #Go through each point that makes the HexaTarget, stopping before it reaches the name at the end
-                print(query_HexaTargets[i][j])
                 #Removes colour identifier to make a homogeneous numpy array
-                query_HexaTargets[i][j] = list(query_HexaTargets[i][j])
-                query_HexaTargets[i][j].pop(-1)
-                query_HexaTargets[i][j] = np.array(query_HexaTargets[i][j])
+                image_coords = np.array([[query_HexaTargets[i][j][0]], [query_HexaTargets[i][j][1]], [0]])
+                print(image_coords)
+
+                mid_way = np.matmul(camera_matrix_inverse, image_coords)
+                real_world_coords = np.matmul(extrinsic_inverse, mid_way)
+                print(real_world_coords)
                 
                 
             
