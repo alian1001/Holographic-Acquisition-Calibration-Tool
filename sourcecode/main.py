@@ -4,11 +4,6 @@
     22964301, 22900426, 22885101
 """
 
-### RUNNING NOTES ###
-
-
-
-### GENERAL COMMENTS ### 
 
 import sys
 import os
